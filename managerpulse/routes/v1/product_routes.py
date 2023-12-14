@@ -6,7 +6,7 @@ from managerpulse.core.models.product_model import ProductModel
 
 product_router = APIRouter(prefix='/product', tags=['product'])
 product_url = os.getenv(
-    'CLIENT_URL'
+    'PRODUCT_SERVICE_URL'
 ) or 'http://localhost:8000/api/v1/product/'
 
 

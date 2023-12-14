@@ -5,7 +5,9 @@ import os
 from managerpulse.core.models.client_model import ClientModel
 
 client_router = APIRouter(prefix='/client', tags=['client'])
-client_url = os.getenv('CLIENT_URL') or 'http://localhost:3000/api/v1/client/'
+client_url = os.getenv(
+    'CLIENT_SERVICE_URL'
+) or 'http://localhost:3000/api/v1/client/'
 
 
 @client_router.get('/')
