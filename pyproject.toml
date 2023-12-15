@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "managerpulse"
+name = "ManagerPulse"
 version = "0.1.0"
 description = ""
 authors = ["Adriano R. de Sousa <adrianorodriguesdsousa@ufpi.edu.br>"]
