@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 
 class ClientModel(BaseModel):
-    name: str
+    name: Optional[str] = Field(default=None)
     phone: Optional[str] = Field(default=None)
     email: Optional[str] = Field(default=None)
     address: Optional[str] = Field(default=None)
