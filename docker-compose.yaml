@@ -1,15 +1,4 @@
 services:
-  managerpulse:
-    container_name: ManagerPulse
-    build: .
-    env_file:
-      - .env
-    ports:
-      - '2000:2000'
-    depends_on:
-      - managerpulse_db
-    restart: always
-
   managerpulse_db:
     container_name: managerpulse_db
     image: "mongo:latest"
