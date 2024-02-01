@@ -1,0 +1,33 @@
+services:
+  managerpulse:
+    container_name: ManagerPulse
+    build: .
+    env_file:
+      - .env
+    ports:
+      - '2000:2000'
+    depends_on:
+      - managerpulse_db
+    restart: always
+
+  managerpulse_db:
+    container_name: managerpulse_db
+    image: "mongo:latest"
+    env_file:
+      - .env
+    ports:
+      - '27017:27017'
+    restart: always
+    volumes:
+      - ./managerpulse_db:/data/db
+
+  managerpulse_db_express:
+    container_name: managerpulse_db_express
+    image: "mongo-express:latest"
+    env_file:
+      - .env
+    ports:
+      - '8081:8081'
+    depends_on:
+      - managerpulse_db
+    restart: always
