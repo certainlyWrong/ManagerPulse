@@ -1,4 +1,4 @@
-import os
+
 import httpx
 from typing import List
 from fastapi import APIRouter
@@ -6,15 +6,11 @@ from fastapi import APIRouter
 from managerpulse.db_connection import mongo_db
 
 from managerpulse.core.models.sale_model import SaleModel
+from managerpulse.environment import Environment
 sale_router = APIRouter(prefix='/sale', tags=['sale'])
 
-client_url = os.getenv(
-    'CLIENT_SERVICE_URL'
-) or 'http://localhost:3000/api/v1/client/'
-
-product_url = os.getenv(
-    'PRODUCT_SERVICE_URL'
-) or 'http://localhost:8000/api/v1/product/'
+client_url = Environment.get_instance.client_url
+product_url = Environment.get_instance.product_url
 
 
 async def verify_client_exists(id_client: int) -> bool:
@@ -55,7 +51,8 @@ async def decrease_stock(id_product: int, sale_quantity: int):
 @sale_router.get('/')
 async def get_sales() -> List[SaleModel]:
     sales = mongo_db.db.get_collection('sale').find({})
-    return [SaleModel(**sale) for sale in sales]
+    result = [SaleModel(**sale) for sale in sales]
+    return result
 
 
 @sale_router.post('/')

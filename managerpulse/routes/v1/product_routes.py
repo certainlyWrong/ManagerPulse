@@ -1,13 +1,11 @@
 from fastapi import APIRouter
 import httpx
-import os
 
 from managerpulse.core.models.product_model import ProductModel
+from managerpulse.environment import Environment
 
 product_router = APIRouter(prefix='/product', tags=['product'])
-product_url = os.getenv(
-    'PRODUCT_SERVICE_URL'
-) or 'http://localhost:8000/api/v1/product/'
+product_url = Environment.get_instance.product_url
 
 
 @product_router.get('/')

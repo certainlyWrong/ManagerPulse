@@ -2,13 +2,13 @@ from pymongo import MongoClient
 from pymongo.database import Database
 
 
-from .enviroments import Enviroments
+from .environment import Environment
 
 
 class _DBConnection:
     def __init__(self):
         self._client = MongoClient(
-            Enviroments.get_instance.mongo_connection_url
+            Environment.get_instance.ME_CONFIG_MONGODB_URL
         )
         self._db = self._client['managerpulse']
 

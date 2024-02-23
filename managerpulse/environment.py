@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 
-class Enviroments:
+class Environment:
 
     instance = None
 
@@ -37,16 +37,10 @@ class Enviroments:
             )
         )
 
-        self.mongo_connection_url = (
-            f"mongodb://{self.MONGO_INITDB_ROOT_USERNAME}:"
-            f"{self.MONGO_INITDB_ROOT_PASSWORD}@mongo:27017"
-        )
-
         self.ME_CONFIG_MONGODB_URL = (
-            self.mongo_connection_url
+            "mongodb://root:123456@localhost:27017/"
             if self.MODE == 'development' else os.getenv(
-                'ME_CONFIG_MONGODB_URL',
-                self.mongo_connection_url
+                'ME_CONFIG_MONGODB_URL'
             )
         )
 
@@ -55,16 +49,14 @@ class Enviroments:
             'http://clientpulse:3000/api/v1/client/'
         )
 
+        self.client_url = self.CLIENT_SERVICE_URL
+
         self.PRODUCT_SERVICE_URL = os.getenv(
             'PRODUCT_SERVICE_URL',
             'http://productpulse:8000/api/v1/product/'
         )
 
-        self.MONGO_HOST = (
-            'localhost' if self.MODE == 'development' else 'localhost'
-        )
-
-        self.MONGO_PORT = 27017
+        self.product_url = self.PRODUCT_SERVICE_URL
 
     def __str__(self) -> str:
         return (
@@ -72,20 +64,18 @@ class Enviroments:
             f"MONGO_INITDB_ROOT_USERNAME: {self.MONGO_INITDB_ROOT_USERNAME}\n"
             f"MONGO_INITDB_ROOT_PASSWORD: {self.MONGO_INITDB_ROOT_PASSWORD}\n"
             f"ME_CONFIG_MONGODB_ADMINUSERNAME: "
-            "{self.ME_CONFIG_MONGODB_ADMINUSERNAME}\n"
+            f"{self.ME_CONFIG_MONGODB_ADMINUSERNAME}\n"
             f"ME_CONFIG_MONGODB_ADMINPASSWORD: "
-            "{self.ME_CONFIG_MONGODB_ADMINPASSWORD}\n"
+            f"{self.ME_CONFIG_MONGODB_ADMINPASSWORD}\n"
             f"ME_CONFIG_MONGODB_URL: {self.ME_CONFIG_MONGODB_URL}\n"
             f"CLIENT_SERVICE_URL: {self.CLIENT_SERVICE_URL}\n"
             f"PRODUCT_SERVICE_URL: {self.PRODUCT_SERVICE_URL}\n"
-            f"MONGO_HOST: {self.MONGO_HOST}\n"
-            f"MONGO_PORT: {self.MONGO_PORT}\n"
         )
 
     @classmethod
     @property
-    def get_instance(cls) -> 'Enviroments':
+    def get_instance(cls) -> 'Environment':
         if cls.instance is None:
-            cls.instance = Enviroments()
+            cls.instance = Environment()
         print(cls.instance)
         return cls.instance

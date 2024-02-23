@@ -1,13 +1,13 @@
+
 from fastapi import APIRouter
 import httpx
-import os
+
 
 from managerpulse.core.models.client_model import ClientModel
+from managerpulse.environment import Environment
 
 client_router = APIRouter(prefix='/client', tags=['client'])
-client_url = os.getenv(
-    'CLIENT_SERVICE_URL'
-) or 'http://localhost:3000/api/v1/client/'
+client_url = Environment.get_instance.client_url
 
 
 @client_router.get('/')
